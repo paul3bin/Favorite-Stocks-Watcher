@@ -1,10 +1,10 @@
+from accounts.serializers import AuthTokenSerializer, UserSerializer
 from django.shortcuts import render
 from rest_framework import authentication, generics, permissions, viewsets
+from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.response import Response
 from rest_framework.settings import api_settings
-
-from accounts.serializers import AuthTokenSerializer, UserSerializer
 
 
 class CreateUserView(generics.CreateAPIView):
@@ -27,7 +27,7 @@ class CreateTokenView(ObtainAuthToken):
         serializer = AuthTokenSerializer(
             data=request.data, context={"request": request}
         )
-        serializer.is_valid(raise_exception=True, raise_for_status=True)
+        serializer.is_valid(raise_exception=True)
         user = serializer.validated_data["user"]
         token, created = Token.objects.get_or_create(user=user)
 
@@ -52,4 +52,4 @@ class ManageUserView(generics.RetrieveUpdateAPIView):
         """
         retrieve and return authenticated user
         """
-        return seld.request.user
+        return self.request.user
