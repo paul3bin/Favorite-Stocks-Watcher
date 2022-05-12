@@ -2,7 +2,7 @@ version: "3"
 
 services:
   backend:
-    restart: no
+    restart: "always"
     container_name: favorite_stock_backend
     env_file:
       - ./backend/.env
@@ -24,7 +24,7 @@ services:
       - db
 
   db:
-    restart: no
+    restart: "always"
     container_name: favorite_stock_db
     image: postgres:10-alpine
     environment:
