@@ -1,4 +1,3 @@
-from accounts.serializers import AuthTokenSerializer, UserSerializer
 from django.shortcuts import render
 from rest_framework import authentication, generics, permissions, viewsets
 from rest_framework.authtoken.models import Token
