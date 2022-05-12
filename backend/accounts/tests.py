@@ -1,9 +1,8 @@
-from django.test import TestCase
 from django.contrib.auth import get_user_model
+from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
-
 
 CREATE_USER_URL = reverse("accounts:create_user")
 TOKEN_URL = reverse("accounts:get_token")
@@ -48,3 +47,19 @@ class PublicUserAPITests(TestCase):
 
         # checking whether the password is not returned in the response
         self.assertNotIn("password", res.data)
+
+    def test_user_exists(self):
+        """
+        Method to test whether user already exists or not.
+        """
+        payload = {
+            "email": "testsample@email.com",
+            "password": "testpass",
+        }
+
+        create_user(**payload)
+
+        res = self.client.post(CREATE_USER_URL, payload)
+
+        # running a check for validating the existance of the user
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
