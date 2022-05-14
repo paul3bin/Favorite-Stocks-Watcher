@@ -17,6 +17,48 @@ def create_user(**params):
     return get_user_model().objects.create_user(**params)
 
 
+class ModelTest(TestCase):
+    """
+    Test cases for user model
+    """
+
+    def test_create_user_with_email(self):
+        """
+        to test creating a new user with email.
+        """
+        values = {"email": "testsample@email.com", "password": "testpassword"}
+        user = get_user_model().objects.create_user(**values)
+
+        self.assertEqual(user.email, values["email"])
+        self.assertTrue(user.check_password(values["password"]))
+
+    def test_new_user_email_normalized(self):
+        """
+        to test the email for a new user is normalized or not.
+        """
+        values = {"email": "testsample@EMAIL.com", "password": "testpassword"}
+        user = get_user_model().objects.create_user(**values)
+
+        self.assertEqual(user.email, values["email"].lower())
+
+    def test_new_user_invalid_email(self):
+        """
+        test creating user with no email
+        """
+        with self.assertRaises(ValueError):
+            get_user_model().objects.create_user(None, "testpass")
+
+    def test_create_new_superuser(self):
+        """
+        test for creating a new super user.
+        """
+        values = {"email": "testsample@email.com", "password": "testpassword"}
+        user = get_user_model().objects.create_superuser(**values)
+
+        self.assertTrue(user.is_superuser)
+        self.assertTrue(user.is_staff)
+
+
 class PublicUserAPITests(TestCase):
     """
     Class for testing public user APIs
