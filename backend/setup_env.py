@@ -16,7 +16,7 @@ def generate_random_string(length: int) -> str:
     return random_string
 
 
-def setup_envionment():
+def setup_envionment() -> None:
     """
     creates a new .env file within the directory and saves env secrets in it!
     """
@@ -26,6 +26,7 @@ def setup_envionment():
         "ALLOWED_HOSTS=localhost, 127.0.0.1",
         "DEBUG=True",
         "CORS_ALLOWED_ORIGINS=http://localhost:3000",
+        "CSRF_TRUSTED_ORIGINS=http://localhost:3000",
     ]
 
     with open(".env", "w+") as f:
