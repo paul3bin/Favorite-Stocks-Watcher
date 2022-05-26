@@ -29,7 +29,7 @@ def setup_envionment() -> None:
         "CSRF_TRUSTED_ORIGINS=http://localhost:3000",
     ]
 
-    with open(".env", "w+") as f:
+    with open(".env", "a") as f:
         f.write("\n".join(values))
 
     print("ENVIRONMENT SET!")
