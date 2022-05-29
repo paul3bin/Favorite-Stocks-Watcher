@@ -196,3 +196,8 @@ class PrivateAPITests(TestCase):
         res = self.client.get(USER_DETAILS_URL)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, {"name": self.user.name, "email": self.user.email})
+
+    def test_post_user_profile_not_allowed(self):
+        # to test that post request is not allowed in me url
+        res = self.client.post(USER_DETAILS_URL, {})
+        self.assertEqual(res.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
