@@ -39,3 +39,19 @@ class StocksViewSet(viewsets.ModelViewSet):
         stock = models.Stocks.objects.get(id=pk)
         serializer = serializers.StocksSerializer(instance=stock, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    def update(self, request, pk=None):
+        stock = models.Stocks.objects.get(id=pk)
+        serializer = serializers.StocksSerializer(instance=stock, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(data=serializer.data, status=status.HTTP_202_ACCEPTED)
+
+    def destroy(self, request, pk=None):
+        stock = models.Stocks.obbjects.objects.get(id=pk)
+        stock.delete()
+
+        return Response(
+            data={"message": "stock deleted"}, status=status.HTTP_202_ACCEPTED
+        )
