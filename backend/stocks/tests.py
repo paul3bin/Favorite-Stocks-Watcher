@@ -4,7 +4,6 @@ from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
-
 from stocks import models
 
 ADD_STOCK = reverse("stocks:add")
