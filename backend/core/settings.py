@@ -30,6 +30,9 @@ DEBUG = config("DEBUG", default=False, cast=bool)
 
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="127.0.0.1", cast=Csv())
 
+CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", default="127.0.0.1", cast=Csv())
+
+CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", default="127.0.0.1", cast=Csv())
 
 # Application definition
 
@@ -44,6 +47,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "accounts",
+    "stocks",
 ]
 
 MIDDLEWARE = [
