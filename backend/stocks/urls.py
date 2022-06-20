@@ -1,4 +1,5 @@
 from django.urls import path
+
 from stocks.views import StocksViewSet
 
 app_name = "stocks"

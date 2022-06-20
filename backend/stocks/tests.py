@@ -4,7 +4,9 @@ from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
+
 from stocks import models
+from stocks.serializers import StocksSerializer
 
 ADD_STOCK = reverse("stocks:add")
 LIST_STOCKS = reverse("stocks:list")
@@ -36,6 +38,14 @@ def sample_user(email="test@gmail.com", password="testpassword"):
     return get_user_model().objects.create_user(email, password)
 
 
+def sample_stock(params: dict):
+    """
+    create and return sample stock
+    """
+
+    return models.Stocks.objects.create(**params)
+
+
 class StockModelTest(TestCase):
     """
     Test cases for stocks model.
@@ -61,6 +71,24 @@ class StockModelTest(TestCase):
         self.assertEqual(IntegrityError, type(raised.exception))
 
 
+class PublicStockAPITest(TestCase):
+    """
+    Test cases for public stock APIs
+    """
+
+    def setUp(self):
+        self.client = APIClient()
+
+    def test_create_stock_unauthorized(self):
+        """
+        to test creating stocks without authentication
+        """
+        payload = {"user": 6, "stock_symbol": "TSLA", "company_name": "Tesla Inc."}
+
+        res = self.client.post(ADD_STOCK, payload)
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+
 class PrivateStockAPITest(TestCase):
     """
     Test cases for private stock APIs
@@ -68,9 +96,27 @@ class PrivateStockAPITest(TestCase):
 
     def setUp(self):
         self.client = APIClient()
+        self.user = get_user_model().objects.create_user(
+            "testemail@example.com", "testpassword"
+        )
+        self.client.force_authenticate(self.user)
 
-    def test_create_stock_unauthorized(self):
-        payload = {"user": 6, "stock_symbol": "TSLA", "company_name": "Tesla Inc."}
+    def test_list_stocks(self):
+        """
+        to test retrieving a list of stocks.
+        """
 
-        res = self.client.post(ADD_STOCK, payload)
-        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+        sample_stock(
+            {"user": self.user, "stock_symbol": "AAPL", "company_name": "Apple Inc."}
+        )
+        sample_stock(
+            {"user": self.user, "stock_symbol": "TSLA", "company_name": "Tesla Inc."}
+        )
+
+        res = self.client.get(LIST_STOCKS)
+
+        stocks = models.Stocks.objects.all().filter(user=self.user)
+        serializer = StocksSerializer(stocks, many=True)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, serializer.data)
