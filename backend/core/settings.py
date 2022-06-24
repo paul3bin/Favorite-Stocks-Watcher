@@ -100,6 +100,7 @@ DATABASES = {
     }
 }
 
+# Default database settings for unit testing
 if "test" in sys.argv:
     DATABASES["default"] = {
         "ENGINE": "django.db.backends.sqlite3",
@@ -115,6 +116,7 @@ CACHES = {
     }
 }
 
+# Default cache settings for unit testing
 if "test" in sys.argv:
     CACHES = {
         "default": {
