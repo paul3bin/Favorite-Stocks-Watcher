@@ -35,7 +35,6 @@ class CreateTokenView(ObtainAuthToken):
         return Response(
             {
                 "token": token.key,
-                "user_id": user.pk,
             }
         )
 
