@@ -7,6 +7,21 @@ from rest_framework.response import Response
 from stocks import models, serializers
 
 
+def get_stock_quote(stock_symbol: str) -> dict:
+    """
+    Function that receives a stock symbol and returns a dictionary containing following keys:
+    c - current price
+    d - change
+    dp - percent change
+    h - high price of the day
+    l - low price of the day
+    o - open price of the day
+    pc - previous close price
+    """
+    finnhub_client = finnhub.Client(api_key=config("FINNHUB_API_KEY"))
+    stock_quote = finnhub_client.quote(stock_symbol)
+
+
 class StocksViewSet(viewsets.ModelViewSet):
     queryset = models.Stocks.objects.all()
     serializer_class = serializers.StocksSerializer
