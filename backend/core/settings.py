@@ -124,6 +124,8 @@ if "test" in sys.argv:
         }
     }
 
+CACHE_MIDDLEWARE_SECONDS = 60
+
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
