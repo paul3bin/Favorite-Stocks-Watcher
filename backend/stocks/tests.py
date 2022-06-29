@@ -153,3 +153,30 @@ class PrivateStockAPITest(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
+
+    def test_partial_update_stock(self):
+        """
+        to test partial updating a stock
+        """
+        # creating a stock with wrong stock ticker
+        new_stock = sample_stock(
+            {"user": self.user, "stock_symbol": "TESLA", "company_name": "Tesla Inc."}
+        )
+
+        partial_update_url = partial_update_stock_url(new_stock.pk)
+        retrieve_url = retrieve_stock_url(new_stock.pk)
+
+        payload = {
+            "user": self.user,
+            "stock_symbol": "TSLA",
+            "company_name": "Tesla Inc.",
+        }
+
+        update = self.client.patch(partial_update_url, payload=payload)
+
+        res = self.client.get(retrieve_url)
+        stock = models.Stocks.objects.filter(pk=new_stock.pk)
+        serializer = StocksSerializer(stock, many=True)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, serializer.data)
