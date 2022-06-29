@@ -19,11 +19,11 @@ def retrieve_stock_url(stock_id):
     return reverse("stocks:retrieve", args=[stock_id])
 
 
-def update_stock_url(stock_id):
+def partial_update_stock_url(stock_id):
     """
     returns update stock url with stock id
     """
-    return reverse("stocks:update", args=[stock_id])
+    return reverse("stocks:partial-update", args=[stock_id])
 
 
 def delete_stock_url(stock_id):
@@ -117,6 +117,66 @@ class PrivateStockAPITest(TestCase):
 
         stocks = models.Stocks.objects.all().filter(user=self.user)
         serializer = StocksSerializer(stocks, many=True)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(type(res.data), list)
+
+    def test_delete_stock(self):
+        """
+        test deleting an existing stock detail
+        """
+        new_stock = sample_stock(
+            {"user": self.user, "stock_symbol": "TSLA", "company_name": "Tesla Inc."}
+        )
+
+        delete_url = delete_stock_url(new_stock.pk)
+        res = self.client.delete(delete_url)
+
+        self.assertFalse(models.Stocks.objects.filter(pk=new_stock.pk).exists())
+
+    def test_retrieve_stock(self):
+        """
+        to test retrieving stock details
+        """
+        payload = {
+            "user": self.user,
+            "stock_symbol": "TSLA",
+            "company_name": "Tesla Inc.",
+        }
+        new_stock = sample_stock(payload)
+
+        retrieve_url = retrieve_stock_url(new_stock.pk)
+
+        res = self.client.get(retrieve_url)
+        stock = models.Stocks.objects.filter(pk=new_stock.pk)
+        serializer = StocksSerializer(stock, many=True)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertEqual(res.data, serializer.data)
+
+    def test_partial_update_stock(self):
+        """
+        to test partial updating a stock
+        """
+        # creating a stock with wrong stock ticker
+        new_stock = sample_stock(
+            {"user": self.user, "stock_symbol": "TESLA", "company_name": "Tesla Inc."}
+        )
+
+        partial_update_url = partial_update_stock_url(new_stock.pk)
+        retrieve_url = retrieve_stock_url(new_stock.pk)
+
+        payload = {
+            "user": self.user,
+            "stock_symbol": "TSLA",
+            "company_name": "Tesla Inc.",
+        }
+
+        update = self.client.patch(partial_update_url, payload=payload)
+
+        res = self.client.get(retrieve_url)
+        stock = models.Stocks.objects.filter(pk=new_stock.pk)
+        serializer = StocksSerializer(stock, many=True)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)

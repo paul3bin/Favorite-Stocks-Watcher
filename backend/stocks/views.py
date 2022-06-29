@@ -28,7 +28,7 @@ def get_stock_quote(stock_symbol: str) -> dict:
     return stock_quote
 
 
-class StocksViewSet(viewsets.ModelViewSet):
+class StocksViewSet(viewsets.ModelViewSet, viewsets.ViewSet):
     queryset = models.Stocks.objects.all()
     serializer_class = serializers.StocksSerializer
     authentication_classes = (TokenAuthentication,)
@@ -38,11 +38,8 @@ class StocksViewSet(viewsets.ModelViewSet):
         """
         method to list all the stock details added by the user.
         """
-        stocks = (
-            models.Stocks.objects.all()
-            .filter(user=request.user.id)
-            .defer("user", "added_on")
-        )
+        stocks = models.Stocks.objects.all().filter(user=request.user.id)
+
         serializer = serializers.StocksSerializer(instance=stocks, many=True)
         resp = []
 
@@ -77,22 +74,24 @@ class StocksViewSet(viewsets.ModelViewSet):
 
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
-    def update(self, request, pk=None):
+    def partial_update(self, request, pk=None, *args, **kwargs):
         """
         method for updating user stock entry
         """
         stock = models.Stocks.objects.get(id=pk)
-        serializer = serializers.StocksSerializer(instance=stock, data=request.data)
+        serializer = serializers.StocksSerializer(
+            instance=stock, data=request.data, partial=True
+        )
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
-        return Response(data=serializer.data, status=status.HTTP_202_ACCEPTED)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def destroy(self, request, pk=None):
         """
         method for deleting user stock
         """
-        stock = models.Stocks.obbjects.objects.get(id=pk)
+        stock = models.Stocks.objects.get(id=pk)
         stock.delete()
 
         return Response(
