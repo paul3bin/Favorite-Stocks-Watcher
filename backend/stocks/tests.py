@@ -19,11 +19,11 @@ def retrieve_stock_url(stock_id):
     return reverse("stocks:retrieve", args=[stock_id])
 
 
-def update_stock_url(stock_id):
+def partial_update_stock_url(stock_id):
     """
     returns update stock url with stock id
     """
-    return reverse("stocks:update", args=[stock_id])
+    return reverse("stocks:partial-update", args=[stock_id])
 
 
 def delete_stock_url(stock_id):

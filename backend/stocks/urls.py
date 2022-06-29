@@ -8,6 +8,12 @@ urlpatterns = [
     path("list", StocksViewSet.as_view({"get": "list"}), name="list"),
     path("add", StocksViewSet.as_view({"post": "create"}), name="add"),
     path("<str:pk>", StocksViewSet.as_view({"get": "retrieve"}), name="retrieve"),
-    path("<str:pk>", StocksViewSet.as_view({"put", "update"}), name="update"),
-    path("<str:pk>", StocksViewSet.as_view({"delete": "destroy"}), name="delete"),
+    path(
+        "update-partial/<str:pk>",
+        StocksViewSet.as_view({"patch": "partial_update"}),
+        name="partial-update",
+    ),
+    path(
+        "remove/<str:pk>", StocksViewSet.as_view({"delete": "destroy"}), name="delete"
+    ),
 ]
