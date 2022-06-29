@@ -46,3 +46,16 @@ services:
     image: redis:alpine
     ports:
       - "6378:6379"
+
+  frontend:
+    restart: "unless-stopped"
+    command: npm start
+    container_name: favorite_stock_frontend
+    build:
+      context: ./frontend/
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    depends_on:
+      - backend
