@@ -25,6 +25,16 @@ def get_stock_quote(stock_symbol: str) -> dict:
     finnhub_client = finnhub.Client(api_key=config("FINNHUB_API_KEY"))
     stock_quote = finnhub_client.quote(stock_symbol)
 
+    # renaming dict keys for better readability
+    stock_quote["current_price"] = stock_quote.pop("c")
+    stock_quote["change"] = stock_quote.pop("d")
+    stock_quote["percent_change"] = stock_quote.pop("dp")
+    stock_quote["high_price_of_the_day"] = stock_quote.pop("h")
+    stock_quote["low_price_of_the_day"] = stock_quote.pop("l")
+    stock_quote["opening_price"] = stock_quote.pop("o")
+    stock_quote["previous_closing_price"] = stock_quote.pop("pc")
+    stock_quote["timestamp"] = stock_quote.pop("t")
+
     return stock_quote
 
 
@@ -46,7 +56,7 @@ class StocksViewSet(viewsets.ModelViewSet, viewsets.ViewSet):
         for data in serializer.data:
             quote = get_stock_quote(dict(data)["stock_symbol"])
             data = dict(data)
-            data.update(quote)
+            data["quote"] = quote
             resp.append(data)
 
         return Response(data=resp, status=status.HTTP_200_OK)
