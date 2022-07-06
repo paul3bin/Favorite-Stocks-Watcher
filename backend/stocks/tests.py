@@ -4,7 +4,6 @@ from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
-
 from stocks import models
 from stocks.serializers import StocksSerializer
 
@@ -119,7 +118,7 @@ class PrivateStockAPITest(TestCase):
         serializer = StocksSerializer(stocks, many=True)
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
-        self.assertEqual(type(res.data), list)
+        self.assertEqual(res.data, serializer.data)
 
     def test_delete_stock(self):
         """
