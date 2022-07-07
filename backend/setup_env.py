@@ -4,8 +4,8 @@ Python script to setup environment for the project
 
 import os
 import random
-from string import ascii_lowercase, ascii_uppercase, digits
 from os.path import exists
+from string import ascii_lowercase, ascii_uppercase, digits
 
 
 def generate_random_string(length: int) -> str:
