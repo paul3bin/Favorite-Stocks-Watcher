@@ -1,6 +1,5 @@
 from django.urls import path
-
-from stocks.views import StocksViewSet
+from stocks.views import StocksViewSet, get_stock_quote
 
 app_name = "stocks"
 
@@ -16,4 +15,5 @@ urlpatterns = [
     path(
         "remove/<str:pk>", StocksViewSet.as_view({"delete": "destroy"}), name="delete"
     ),
+    path("quote/<str:stock_symbol>", get_stock_quote, name="stock_symbol"),
 ]

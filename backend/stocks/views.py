@@ -3,15 +3,21 @@ from collections import OrderedDict
 import finnhub
 from decouple import config
 from django.shortcuts import render
+from django.views.decorators.cache import cache_page
 from rest_framework import status, viewsets
 from rest_framework.authentication import TokenAuthentication
+from rest_framework.decorators import (api_view, authentication_classes,
+                                       permission_classes)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-
 from stocks import models, serializers
 
 
-def get_stock_quote(stock_symbol: str) -> dict:
+@api_view(["GET"])
+@permission_classes((IsAuthenticated,))
+@authentication_classes((TokenAuthentication,))
+@cache_page(60 * 2)
+def get_stock_quote(request, stock_symbol: str) -> dict:
     """
     Function that receives a stock symbol and returns a dictionary containing following keys:
     c - current price
@@ -22,6 +28,7 @@ def get_stock_quote(stock_symbol: str) -> dict:
     o - open price of the day
     pc - previous close price
     """
+
     finnhub_client = finnhub.Client(api_key=config("FINNHUB_API_KEY"))
     stock_quote = finnhub_client.quote(stock_symbol)
 
@@ -35,7 +42,7 @@ def get_stock_quote(stock_symbol: str) -> dict:
     stock_quote["previous_closing_price"] = stock_quote.pop("pc")
     stock_quote["timestamp"] = stock_quote.pop("t")
 
-    return stock_quote
+    return Response(stock_quote)
 
 
 class StocksViewSet(viewsets.ModelViewSet, viewsets.ViewSet):
@@ -51,15 +58,8 @@ class StocksViewSet(viewsets.ModelViewSet, viewsets.ViewSet):
         stocks = models.Stocks.objects.all().filter(user=request.user.id)
 
         serializer = serializers.StocksSerializer(instance=stocks, many=True)
-        resp = []
 
-        for data in serializer.data:
-            quote = get_stock_quote(dict(data)["stock_symbol"])
-            data = dict(data)
-            data["quote"] = quote
-            resp.append(data)
-
-        return Response(data=resp, status=status.HTTP_200_OK)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request):
         """
