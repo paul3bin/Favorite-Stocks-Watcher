@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import "../styles/login.css";
 
@@ -38,7 +39,8 @@ export function Login() {
                   Sign in
                 </button>
                 <p class="mt-5 mb-3 text-muted">
-                  Don't have an account register <a href="#">here</a>.
+                  Don't have an account? Register <Link to="/signup">here</Link>
+                  .
                 </p>
               </form>
             </main>
