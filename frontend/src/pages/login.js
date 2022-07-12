@@ -51,7 +51,7 @@ export function Login() {
     <div className="container">
       <ToastContainer />
       <div className="row justify-content-md-center">
-        <div className="card text-dark bg-light shadow p-3 mb-3 rounded">
+        <div className="card text-dark bg-light shadow p-3 mb-3 rounded login-container">
           <div className="text-center">
             <main className="form-signin w-100 m-auto">
               <h1 className="h3 mb-3 fw-normal">Sign In</h1>

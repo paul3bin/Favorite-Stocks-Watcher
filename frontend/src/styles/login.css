@@ -4,7 +4,6 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
-  padding-left: 0;
 }
 .form-signin {
   max-width: 430px;
