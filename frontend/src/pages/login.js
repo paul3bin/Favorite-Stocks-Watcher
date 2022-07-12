@@ -66,7 +66,7 @@ export function Login() {
                   required={true}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <label for="floatingInput">Email address</label>
+                <label for="floatingInput">Email</label>
               </div>
 
               <div class="form-floating mb-3">
@@ -87,7 +87,7 @@ export function Login() {
                 type="submit"
                 onClick={loginEvent}
               >
-                Sign in
+                Login
               </button>
               <p className="mt-5 mb-3 text-muted">
                 Don't have an account? Register <Link to="/signup">here</Link>.
