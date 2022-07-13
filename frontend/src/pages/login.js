@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
 import { API } from "../Api";
 
-import "react-toastify/dist/ReactToastify.css";
-
 import "../styles/login.css";
+import "react-toastify/dist/ReactToastify.css";
 
 export function Login() {
   document.title = "FSW | Login";
@@ -20,16 +19,26 @@ export function Login() {
 
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
 
+  const validEmailRegex =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
   const loginEvent = () => {
-    if (email.length === 0) {
-      toast.error("Email is required!", {
+    if (email.length !== 0 && email.match(validEmailRegex)) {
+      if (password.length !== 0) {
+        API.loginUser({ email: email, password: password }).then((resp) =>
+          setCookie("token", resp.token)
+        );
+      } else {
+        toast.error("Password cannot be empty!", {
+          position: toast.POSITION.TOP_RIGHT,
+          theme: "colored",
+        });
+      }
+    } else {
+      toast.error("Enter valid email!", {
         position: toast.POSITION.TOP_RIGHT,
         theme: "colored",
       });
-    } else {
-      API.loginUser({ email: email, password: password }).then((resp) =>
-        setCookie("token", resp.token)
-      );
     }
   };
 
