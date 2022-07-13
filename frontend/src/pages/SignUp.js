@@ -30,42 +30,42 @@ export function SignUp() {
               if (isSamePassword) {
                 toast.success("User registered! Login to continue.", {
                   position: toast.POSITION_TOP_RIGHT,
-                  theme: "colored",
+                  theme: "dark",
                 });
               } else {
                 toast.error("Passwords do not match!", {
                   position: toast.POSITION_TOP_RIGHT,
-                  theme: "colored",
+                  theme: "dark",
                 });
               }
             } else {
               toast.error("Re-Enter password!", {
                 position: toast.POSITION_TOP_RIGHT,
-                theme: "colored",
+                theme: "dark",
               });
             }
           } else {
             toast.error("Password should be atleast 8 characters!", {
               position: toast.POSITION_TOP_RIGHT,
-              theme: "colored",
+              theme: "dark",
             });
           }
         } else {
           toast.error("Password cannot be empty", {
             position: toast.POSITION_TOP_RIGHT,
-            theme: "colored",
+            theme: "dark",
           });
         }
       } else {
         toast.error("Enter valid email!", {
           position: toast.POSITION_TOP_RIGHT,
-          theme: "colored",
+          theme: "dark",
         });
       }
     } else {
       toast.error("Name field cannot be empty!", {
         position: toast.POSITION_TOP_RIGHT,
-        theme: "colored",
+        theme: "dark",
       });
     }
   };

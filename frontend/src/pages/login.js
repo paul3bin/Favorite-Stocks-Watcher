@@ -31,13 +31,13 @@ export function Login() {
       } else {
         toast.error("Password cannot be empty!", {
           position: toast.POSITION.TOP_RIGHT,
-          theme: "colored",
+          theme: "dark",
         });
       }
     } else {
       toast.error("Enter valid email!", {
         position: toast.POSITION.TOP_RIGHT,
-        theme: "colored",
+        theme: "dark",
       });
     }
   };
@@ -46,7 +46,7 @@ export function Login() {
     if (cookies["token"] === "undefined") {
       toast.error("Wrong email or password.", {
         position: toast.POSITION.TOP_RIGHT,
-        theme: "colored",
+        theme: "dark",
       });
       removeCookie(["token"]);
       setEmail("");
