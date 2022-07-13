@@ -54,7 +54,7 @@ export function Login() {
     } else {
       if (cookies["token"]) navigate("/home");
     }
-  }, [cookies]);
+  }, [cookies, navigate, removeCookie]);
 
   return (
     <div className="container">
