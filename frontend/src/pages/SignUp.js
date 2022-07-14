@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
+import { API } from "../Api";
 import "../styles/signup.css";
 
 export function SignUp() {
@@ -21,17 +22,46 @@ export function SignUp() {
   const validEmailRegex =
     /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
+  const navigate = useNavigate();
+
   const registerEvent = () => {
     if (name.length !== 0) {
       if (email.match(validEmailRegex)) {
         if (password.length !== 0) {
           if (password.length >= 8) {
             if (passwordReEnter.length !== 0) {
-              if (isSamePassword) {
-                toast.success("User registered! Login to continue.", {
-                  position: toast.POSITION_TOP_RIGHT,
-                  theme: "dark",
-                });
+              if (isSamePassword()) {
+                API.registerUser({
+                  name: name,
+                  email: email,
+                  password: password,
+                }).then((resp) =>
+                  resp.email[0] === "user with this email already exists."
+                    ? toast.error(
+                        "User already exists!",
+                        {
+                          position: toast.POSITION_TOP_RIGHT,
+                          theme: "dark",
+                        },
+                        (setName(""),
+                        setEmail(""),
+                        setPassword(""),
+                        setPasswordReEnter(""))
+                      )
+                    : toast.success(
+                        "User registered! Login to continue.",
+                        {
+                          position: toast.POSITION_TOP_RIGHT,
+                          theme: "dark",
+                        },
+                        (setEmail(""),
+                        setPassword(""),
+                        setPasswordReEnter(""),
+                        setName(""),
+                        setTimeout(3000),
+                        navigate("/login"))
+                      )
+                );
               } else {
                 toast.error("Passwords do not match!", {
                   position: toast.POSITION_TOP_RIGHT,
