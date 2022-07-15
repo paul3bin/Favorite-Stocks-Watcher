@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
 import { API } from "../Api";
+import { Wrapper } from "../components/Wrapper";
 
 import "../styles/login.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -30,13 +31,13 @@ export function Login() {
         );
       } else {
         toast.error("Password cannot be empty!", {
-          position: toast.POSITION.TOP_RIGHT,
+          position: toast.POSITION.BOTTOM_CENTER,
           theme: "dark",
         });
       }
     } else {
       toast.error("Enter valid email!", {
-        position: toast.POSITION.TOP_RIGHT,
+        position: toast.POSITION.BOTTOM_CENTER,
         theme: "dark",
       });
     }
@@ -57,11 +58,11 @@ export function Login() {
   }, [cookies, navigate, removeCookie]);
 
   return (
-    <div className="container">
-      <ToastContainer />
-      <div className="row justify-content-md-center">
-        <div className="card text-dark bg-light shadow p-3 mb-3 rounded login-container">
-          <div className="text-center">
+    <Wrapper>
+      <div className="container">
+        <ToastContainer />
+        <div className="row justify-content-md-center">
+          <div className="card text-dark shadow p-3 mb-3 rounded login-container text-center">
             <main className="form-signin w-100 m-auto">
               <h1 className="h3 mb-3 fw-normal">Sign In</h1>
 
@@ -98,13 +99,13 @@ export function Login() {
               >
                 Login
               </button>
-              <p className="mt-5 mb-3 text-muted">
+              <p className="mt-4 mb-3 text-muted">
                 Don't have an account? Register <Link to="/signup">here</Link>.
               </p>
             </main>
           </div>
         </div>
       </div>
-    </div>
+    </Wrapper>
   );
 }
