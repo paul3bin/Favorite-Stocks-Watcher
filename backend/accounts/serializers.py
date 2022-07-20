@@ -61,3 +61,12 @@ class AuthTokenSerializer(serializers.Serializer):
         attrs["user"] = user
 
         return attrs
+
+
+class ChangePasswordSerializer(serializers.Serializer):
+    """
+    Serializer class for changing user password
+    """
+
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)

@@ -7,6 +7,7 @@ from rest_framework.test import APIClient
 CREATE_USER_URL = reverse("accounts:create_user")
 TOKEN_URL = reverse("accounts:get_token")
 USER_DETAILS_URL = reverse("accounts:manage_user")
+CHHANGE_USER_PASSWORD_URL = reverse("accounts:change-password")
 
 
 def create_user(**params):
@@ -176,6 +177,18 @@ class PublicUserAPITests(TestCase):
         res = self.client.get(USER_DETAILS_URL)
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
 
+    def test_change_user_password_unauthorized(self):
+        """
+        to test changing password without passing auth token
+        """
+        payload = {
+            "old_password": "samplepassword123",
+            "new_password": "testresetpassword",
+        }
+        res = self.client.put(CHHANGE_USER_PASSWORD_URL, payload)
+
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
 
 class PrivateAPITests(TestCase):
     """
@@ -201,3 +214,27 @@ class PrivateAPITests(TestCase):
         # to test that post request is not allowed in me url
         res = self.client.post(USER_DETAILS_URL, {})
         self.assertEqual(res.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+
+    def test_unsuccessful_change_user_password(self):
+        """
+        to test changing user password by passing wrong old password.
+        """
+        payload = {
+            "old_password": "samplepassword123",
+            "new_password": "testresetpassword",
+        }
+        res = self.client.put(CHHANGE_USER_PASSWORD_URL, payload)
+
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_successful_change_user_password(self):
+        """
+        to test changing user password by passing correct old password.
+        """
+        payload = {
+            "old_password": "testpassword",
+            "new_password": "testresetpassword",
+        }
+        res = self.client.put(CHHANGE_USER_PASSWORD_URL, payload)
+
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
