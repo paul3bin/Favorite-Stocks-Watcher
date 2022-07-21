@@ -4,6 +4,7 @@ import { Login } from "./pages/Login";
 import { SignUp } from "./pages/SignUp";
 import { HomePage } from "./pages/Home";
 import { PageNotFound } from "./pages/PageNotFound";
+import { ChangePassword } from "./pages/ChangePassword";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/signup" element={<SignUp />} />
         <Route exact path="/home" element={<HomePage />} />
+        <Route exact path="/change-password" element={<ChangePassword />} />
         <Route exact path="*" element={<PageNotFound />} />
       </Routes>
     </Router>
