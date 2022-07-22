@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-
+import { useCookies } from "react-cookie";
 import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 import { API } from "../Api";
 import { Wrapper } from "../components/Wrapper";
@@ -15,8 +16,70 @@ export function ChangePassword() {
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordReEntered, setNewPasswordReEntered] = useState("");
 
+  const navigate = useNavigate();
+
+  const [cookies] = useCookies(["token"]);
+
   const isSamePassword = () => {
     return newPassword === newPasswordReEntered;
+  };
+
+  const changePasswordAction = () => {
+    if (oldPassword.length !== 0) {
+      if (newPassword.length !== 0 || newPasswordReEntered.length !== 0) {
+        if (isSamePassword()) {
+          API.changeUserPassword(
+            {
+              old_password: oldPassword,
+              new_password: newPassword,
+            },
+            cookies["token"]
+          ).then((resp) =>
+            resp.message === "Incorrect old password"
+              ? toast.error(
+                  "Incorrect old password",
+                  {
+                    position: toast.POSITION.TOP_RIGHT,
+                    theme: "dark",
+                  },
+                  [
+                    setOldPassword(""),
+                    setNewPassword(""),
+                    setNewPasswordReEntered(""),
+                  ]
+                )
+              : toast.success(
+                  "Password updated successfully!",
+                  {
+                    position: toast.POSITION.TOP_RIGHT,
+                    theme: "dark",
+                  },
+                  [
+                    setOldPassword(""),
+                    setNewPassword(""),
+                    setNewPasswordReEntered(""),
+                    navigate("/home"),
+                  ]
+                )
+          );
+        } else {
+          toast.error("Passwords do not match!", {
+            position: toast.POSITION.TOP_RIGHT,
+            theme: "dark",
+          });
+        }
+      } else {
+        toast.error("Password cannot be empty!", {
+          position: toast.POSITION.TOP_RIGHT,
+          theme: "dark",
+        });
+      }
+    } else {
+      toast.error("Enter your old password!", {
+        position: toast.POSITION.TOP_RIGHT,
+        theme: "dark",
+      });
+    }
   };
 
   return (
@@ -38,7 +101,7 @@ export function ChangePassword() {
                   value={oldPassword}
                   onChange={(e) => setOldPassword(e.target.value)}
                 />
-                <label for="floatingInput">Name</label>
+                <label for="floatingInput">Old-Password</label>
               </div>
 
               <div class="form-floating mb-3">
@@ -70,9 +133,9 @@ export function ChangePassword() {
               <button
                 className="w-100 btn btn-lg btn-primary"
                 type="submit"
-                // onClick={registerEvent}
+                onClick={changePasswordAction}
               >
-                Register
+                Submit
               </button>
             </main>
           </div>
