@@ -1,15 +1,8 @@
-import React from "react";
-import { Redirect } from "react-router-dom";
+import { Outlet, Navigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-// import { PageNotFound } from "./contents/notFound404";
 
-function ProtectedRoute(props) {
-  const Component = props.component;
-  const [token] = useCookies(["token"]);
-  const isAuthenticated = token["token"];
+export function ProtectedRoute(props) {
+  const [cookies] = useCookies(["token"]);
 
-  // return isAuthenticated ? <Component /> : <PageNotFound />;
-  return isAuthenticated ? <Component /> : <Redirect to={{ pathname: "/" }} />;
+  return cookies["token"] ? <Outlet /> : <Navigate to="/login" />;
 }
-
-export { ProtectedRoute };
