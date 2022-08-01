@@ -14,11 +14,11 @@ export function Nav(props) {
       aria-label="Main navigation"
     >
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/home">
+        <Link className="navbar-brand ms-2" to="/home">
           Favorite Stock Watcher
         </Link>
 
-        <div className="dropstart text-end mr-5">
+        <div className="dropstart text-end me-3">
           <a
             href="#"
             className="d-block link-light text-decoration-none dropdown-toggle"
@@ -27,7 +27,7 @@ export function Nav(props) {
           >
             {props.username}
           </a>
-          <ul className="dropdown-menu text-small">
+          <ul className="dropdown-menu text-small shadow">
             <li>
               <a className="dropdown-item" href="/change-password">
                 Change Password

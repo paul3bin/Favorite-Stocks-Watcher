@@ -29,7 +29,7 @@ export function HomePage() {
                 data-bs-toggle="modal"
                 data-bs-target="#staticBackdrop"
               >
-                New Note
+                Add Stock
               </button>
             </div>
           </h6>
