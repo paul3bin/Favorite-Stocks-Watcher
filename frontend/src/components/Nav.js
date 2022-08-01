@@ -4,48 +4,70 @@ import { useCookies } from "react-cookie";
 
 import "../styles/home.css";
 
-export function Nav() {
-  const [cookie] = useCookies(["token"]);
-  const isAuthenticated = cookie["token"];
+export function Nav(props) {
+  const [cookies, setCookie, removeCookie] = useCookies(["token"]);
+  const isAuthenticated = cookies["token"];
 
   return isAuthenticated ? (
     <nav
-      class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark "
+      className="navbar navbar-expand-lg fixed-top navbar-dark bg-dark "
       aria-label="Main navigation"
     >
-      <div class="container-fluid">
+      <div className="container-fluid">
         <Link className="navbar-brand" to="/home">
           Favorite Stock Watcher
         </Link>
 
-        <div class="navbar" id="navbarsExampleDefault">
-          <div class="dropdown text-end">
-            <a
-              href="#"
-              class="d-block link-dark text-decoration-none dropdown-toggle"
-              id="dropdownUser1"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            ></a>
-          </div>
+        <div className="dropstart text-end mr-5">
+          <a
+            href="#"
+            className="d-block link-light text-decoration-none dropdown-toggle"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {props.username}
+          </a>
+          <ul className="dropdown-menu text-small">
+            <li>
+              <a className="dropdown-item" href="/change-password">
+                Change Password
+              </a>
+            </li>
+            <li>
+              <hr className="dropdown-divider" />
+            </li>
+            <li>
+              <a
+                className="dropdown-item"
+                href="/login"
+                onClick={() => removeCookie(["token"])}
+              >
+                Sign out
+              </a>
+            </li>
+          </ul>
         </div>
       </div>
     </nav>
   ) : (
-    <div class="container">
-      <header class="d-flex flex-wrap justify-content-center justify-content-md-between border-bottom">
+    <div className="container">
+      <header className="d-flex flex-wrap justify-content-center justify-content-md-between border-bottom">
         <Link
           to="/"
           className="row align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"
         >
-          <span class="fs-4">FSW</span>
+          <span className="fs-4">FSW</span>
         </Link>
 
-        <div class="col-md-3 text-end">
-          <Link type="button" class="btn btn-outline-primary me-2" to="/login">
+        <div className="col-md-3 text-end">
+          <Link
+            type="button"
+            className="btn btn-outline-primary me-2"
+            to="/login"
+          >
             Login
           </Link>
-          <Link type="button" class="btn btn-primary" to="/signup">
+          <Link type="button" className="btn btn-primary" to="/signup">
             Sign-up
           </Link>
         </div>
