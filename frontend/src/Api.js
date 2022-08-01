@@ -29,4 +29,14 @@ export class API {
       body: JSON.stringify(body),
     }).then((resp) => resp.json());
   }
+
+  static fetchUserDetails(token) {
+    return fetch("/user/me", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+    }).then((resp) => resp.json());
+  }
 }
