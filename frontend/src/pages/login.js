@@ -50,8 +50,6 @@ export function Login() {
         theme: "dark",
       });
       removeCookie(["token"]);
-      setEmail("");
-      setPassword("");
     } else {
       if (cookies["token"]) navigate("/home");
     }
