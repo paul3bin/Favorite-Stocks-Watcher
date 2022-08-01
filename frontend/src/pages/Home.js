@@ -1,11 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+
+import { API } from "../Api";
 import { Wrapper } from "../components/Wrapper";
 
 export function HomePage() {
   document.title = "FSW | Home";
 
+  const [cookies] = useCookies(["token"]);
+  const [userName, setUserName] = useState("");
+
+  useEffect(() => {
+    API.fetchUserDetails(cookies.token).then((resp) => setUserName(resp.name));
+  }, []);
+
   return (
-    <Wrapper>
+    <Wrapper username={userName}>
       <main class="container">
         <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm"></div>
 
