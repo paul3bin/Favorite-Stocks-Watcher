@@ -4,10 +4,13 @@ import finnhub
 from decouple import config
 from django.shortcuts import render
 from django.views.decorators.cache import cache_page
-from rest_framework import status, viewsets
+from rest_framework import status, viewsets, request
 from rest_framework.authentication import TokenAuthentication
-from rest_framework.decorators import (api_view, authentication_classes,
-                                       permission_classes)
+from rest_framework.decorators import (
+    api_view,
+    authentication_classes,
+    permission_classes,
+)
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -44,6 +47,22 @@ def get_stock_quote(request, stock_symbol: str) -> dict:
     stock_quote["timestamp"] = stock_quote.pop("t")
 
     return Response(stock_quote)
+
+
+@api_view(["GET"])
+@permission_classes((IsAuthenticated,))
+@authentication_classes((TokenAuthentication,))
+@cache_page(60 * 4)
+def company_profile(request, stock_symbol: str) -> dict:
+    """
+    Function that receives a stock symbol and returns a dictionary containing the company profile
+    """
+    finnhub_client = finnhub.Client(api_key=config("FINNHUB_API_KEY"))
+    profile = finnhub_client.company_profile2(symbol="AAPL")
+    print(stock_symbol)
+    finnhub_client.close()
+
+    return Response(profile)
 
 
 class StocksViewSet(viewsets.ModelViewSet, viewsets.ViewSet):
