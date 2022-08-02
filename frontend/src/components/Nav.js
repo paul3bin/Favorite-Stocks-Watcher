@@ -6,7 +6,7 @@ import "../styles/home.css";
 
 export function Nav(props) {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
-  const isAuthenticated = cookies["token"];
+  const isAuthenticated = cookies.token;
 
   return isAuthenticated ? (
     <nav

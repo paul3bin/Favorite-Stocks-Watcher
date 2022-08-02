@@ -7,7 +7,7 @@ export function PageNotFound() {
   document.title = "FSW | Page Not Found";
 
   const [cookies] = useCookies(["token"]);
-  const isAuthenticated = cookies["token"];
+  const isAuthenticated = cookies.token;
 
   return (
     <div className="d-flex h-100 text-center text-dark bg-white">
