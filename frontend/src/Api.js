@@ -39,4 +39,24 @@ export class API {
       },
     }).then((resp) => resp.json());
   }
+
+  static fetchCompanyProfile(token, stock_symbol) {
+    return fetch(`stock/company-profile/${stock_symbol}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+    }).then((resp) => resp.json());
+  }
+
+  static fetchStockQuote(token, stock_symbol) {
+    return fetch(`stock/quote/${stock_symbol}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+    }).then((resp) => resp.json());
+  }
 }
