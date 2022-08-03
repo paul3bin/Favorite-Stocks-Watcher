@@ -52,14 +52,13 @@ def get_stock_quote(request, stock_symbol: str) -> dict:
 @api_view(["GET"])
 @permission_classes((IsAuthenticated,))
 @authentication_classes((TokenAuthentication,))
-@cache_page(60 * 4)
 def company_profile(request, stock_symbol: str) -> dict:
     """
     Function that receives a stock symbol and returns a dictionary containing the company profile
     """
     finnhub_client = finnhub.Client(api_key=config("FINNHUB_API_KEY"))
-    profile = finnhub_client.company_profile2(symbol="AAPL")
-    print(stock_symbol)
+    profile = finnhub_client.company_profile2(symbol=stock_symbol)
+
     finnhub_client.close()
 
     return Response(profile)
