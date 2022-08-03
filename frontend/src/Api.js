@@ -1,6 +1,6 @@
 export class API {
-  static loginUser(body) {
-    return fetch("/user/token", {
+  static async loginUser(body) {
+    return await fetch("/user/token", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -9,8 +9,8 @@ export class API {
     }).then((resp) => resp.json());
   }
 
-  static registerUser(body) {
-    return fetch("/user/create", {
+  static async registerUser(body) {
+    return await fetch("/user/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -19,8 +19,8 @@ export class API {
     }).then((resp) => resp.json());
   }
 
-  static changeUserPassword(body, token) {
-    return fetch("/user/change-password", {
+  static async changeUserPassword(body, token) {
+    return await fetch("/user/change-password", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -30,8 +30,8 @@ export class API {
     }).then((resp) => resp.json());
   }
 
-  static fetchUserDetails(token) {
-    return fetch("/user/me", {
+  static async fetchUserDetails(token) {
+    return await fetch("/user/me", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -40,8 +40,8 @@ export class API {
     }).then((resp) => resp.json());
   }
 
-  static fetchCompanyProfile(token, stock_symbol) {
-    return fetch(`stock/company-profile/${stock_symbol}`, {
+  static async fetchCompanyProfile(token, stock_symbol) {
+    return await fetch(`stock/company-profile/${stock_symbol}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -50,8 +50,18 @@ export class API {
     }).then((resp) => resp.json());
   }
 
-  static fetchStockQuote(token, stock_symbol) {
-    return fetch(`stock/quote/${stock_symbol}`, {
+  static async fetchStockQuote(token, stock_symbol) {
+    return await fetch(`stock/quote/${stock_symbol}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+    }).then((resp) => resp.json());
+  }
+
+  static async fetchUserStocks(token) {
+    return await fetch("stock/list", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
