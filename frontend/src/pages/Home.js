@@ -11,15 +11,17 @@ export function HomePage() {
 
   const [cookies] = useCookies(["token"]);
   const [userName, setUserName] = useState("");
+  const [userStocks, setUserStocks] = useState([]);
 
   useEffect(() => {
     API.fetchUserDetails(cookies.token).then((resp) => setUserName(resp.name));
+    API.fetchUserStocks(cookies.token).then((resp) => setUserStocks(resp));
   }, [cookies.token]);
 
   return (
     <Wrapper username={userName}>
       <main class="container">
-        <UserStocks />
+        <UserStocks user_stocks={userStocks} />
 
         <SuggestedStocks />
       </main>
