@@ -10,7 +10,7 @@ export class API {
   }
 
   static async registerUser(body) {
-    return await fetch("/user/create", {
+    return await fetch("/user", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -61,8 +61,18 @@ export class API {
   }
 
   static async fetchUserStocks(token) {
-    return await fetch("stock/list", {
+    return await fetch("stock/", {
       method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+    }).then((resp) => resp.json());
+  }
+
+  static async deleteUserStock(token, id) {
+    return await fetch(`stock/${id}`, {
+      method: "DELETE",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Token ${token}`,
