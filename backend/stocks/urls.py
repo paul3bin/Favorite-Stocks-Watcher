@@ -5,16 +5,13 @@ from stocks.views import StocksViewSet, get_stock_quote, company_profile
 app_name = "stocks"
 
 urlpatterns = [
-    path("list", StocksViewSet.as_view({"get": "list"}), name="list"),
-    path("add", StocksViewSet.as_view({"post": "create"}), name="add"),
-    path("<str:pk>", StocksViewSet.as_view({"get": "retrieve"}), name="retrieve"),
+    path("", StocksViewSet.as_view({"get": "list", "post": "create"}), name="stocks"),
     path(
-        "update-partial/<str:pk>",
-        StocksViewSet.as_view({"patch": "partial_update"}),
-        name="partial-update",
-    ),
-    path(
-        "remove/<str:pk>", StocksViewSet.as_view({"delete": "destroy"}), name="delete"
+        "<str:pk>",
+        StocksViewSet.as_view(
+            {"get": "retrieve", "patch": "partial_update", "delete": "destroy"}
+        ),
+        name="stock",
     ),
     path("quote/<str:stock_symbol>", get_stock_quote, name="quote"),
     path("company-profile/<str:stock_symbol>", company_profile, name="company_profile"),

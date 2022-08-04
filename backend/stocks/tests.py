@@ -8,29 +8,29 @@ from rest_framework.test import APIClient
 from stocks import models
 from stocks.serializers import StocksSerializer
 
-ADD_STOCK = reverse("stocks:add")
-LIST_STOCKS = reverse("stocks:list")
+ADD_STOCK = reverse("stocks:stocks")
+LIST_STOCKS = reverse("stocks:stocks")
 
 
 def retrieve_stock_url(stock_id):
     """
     returns retrieve stock url with stock id
     """
-    return reverse("stocks:retrieve", args=[stock_id])
+    return reverse("stocks:stock", args=[stock_id])
 
 
 def partial_update_stock_url(stock_id):
     """
     returns update stock url with stock id
     """
-    return reverse("stocks:partial-update", args=[stock_id])
+    return reverse("stocks:stock", args=[stock_id])
 
 
 def delete_stock_url(stock_id):
     """
     returns delete stock url with stock id
     """
-    return reverse("stocks:delete", args=[stock_id])
+    return reverse("stocks:stock", args=[stock_id])
 
 
 def sample_user(email="test@gmail.com", password="testpassword"):

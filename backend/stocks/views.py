@@ -124,5 +124,5 @@ class StocksViewSet(viewsets.ModelViewSet, viewsets.ViewSet):
         stock.delete()
 
         return Response(
-            data={"message": "stock deleted"}, status=status.HTTP_202_ACCEPTED
+            data={"message": "stock deleted"}, status=status.HTTP_204_NO_CONTENT
         )
