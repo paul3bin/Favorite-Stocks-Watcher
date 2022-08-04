@@ -3,10 +3,14 @@ import React from "react";
 import { StockCard } from "./StockCard";
 
 export function UserStocks(props) {
+  const deleteStock = (stock_id) => {
+    props.deleteStock(stock_id);
+  };
+
   const stocks =
     props.user_stocks &&
     props.user_stocks.map((stock, i) => {
-      return <StockCard stock={stock} />;
+      return <StockCard stock={stock} stockDelete={deleteStock} />;
     });
 
   return (

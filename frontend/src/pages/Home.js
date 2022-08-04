@@ -13,6 +13,11 @@ export function HomePage() {
   const [userName, setUserName] = useState("");
   const [userStocks, setUserStocks] = useState([]);
 
+  const deleteStockAction = (stock_id) => {
+    const user_stock_list = userStocks.filter((n) => n.id !== stock_id);
+    setUserStocks(user_stock_list);
+  };
+
   useEffect(() => {
     API.fetchUserDetails(cookies.token).then((resp) => setUserName(resp.name));
     API.fetchUserStocks(cookies.token).then((resp) => setUserStocks(resp));
@@ -21,7 +26,7 @@ export function HomePage() {
   return (
     <Wrapper username={userName}>
       <main class="container">
-        <UserStocks user_stocks={userStocks} />
+        <UserStocks user_stocks={userStocks} deleteStock={deleteStockAction} />
 
         <SuggestedStocks />
       </main>

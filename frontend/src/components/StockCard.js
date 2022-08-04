@@ -6,15 +6,24 @@ import { API } from "../Api";
 export function StockCard(props) {
   const [cookies] = useCookies(["token"]);
   const [profile, setProfile] = useState({});
+  const [stockQuote, setStockQuote] = useState({});
+
+  const deleteStock = (stock_id) => {
+    API.deleteUserStock(cookies.token, stock_id);
+    props.stockDelete(stock_id);
+  };
 
   useEffect(() => {
     API.fetchCompanyProfile(cookies.token, props.stock.stock_symbol).then(
       (resp) => setProfile(resp)
     );
-  });
+    API.fetchStockQuote(cookies.token, props.stock.stock_symbol).then((resp) =>
+      setStockQuote(resp)
+    );
+  }, []);
 
   return (
-    <div className="container">
+    <div className="container mb-2">
       <a
         href="#"
         className="list-group-item list-group-item-action d-flex gap-3 py-3"
@@ -40,21 +49,41 @@ export function StockCard(props) {
             Added on:{" "}
             {props.stock.added_on.slice(0, 10).split("-").reverse().join("/")}
           </small>
-          <div>
-            <a href="#">Delete</a>
-          </div>
         </div>
       </a>
       <div className="collapse" id={`${props.stock.stock_symbol}`}>
-        <div className="card card-body w-100 mt-1">
-          <small>Country: {profile.country}</small>
-          <br />
-          <small>Exchange: {profile.exchange}</small>
-          <br />
-          <small>IPO: {profile.ipo}</small>
-          <br />
-          <small>Website: {profile.weburl}</small>
-          <br />
+        <div className="card card-body w-100 mb-2">
+          <div className="row">
+            <div className="col">
+              <small>Country: {profile.country}</small>
+              <br />
+              <small>Exchange: {profile.exchange}</small>
+              <br />
+              <small>IPO: {profile.ipo}</small>
+              <br />
+            </div>
+            <div className="col">
+              <small>Current Price: {stockQuote.current_price}</small>
+              <br />
+              <small>Percentage Change: {stockQuote.percent_change}</small>
+              <br />
+              <small>Opening Price: {stockQuote.opening_price}</small>
+              <br />
+              <small>
+                Previous Closing Price: {stockQuote.previous_closing_price}
+              </small>
+              <br />
+            </div>
+            <div className="col text-end">
+              <button
+                type="button"
+                className="btn btn-sm btn-outline-danger"
+                onClick={() => deleteStock(props.stock.id)}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
