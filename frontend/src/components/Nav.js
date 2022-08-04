@@ -50,28 +50,6 @@ export function Nav(props) {
       </div>
     </nav>
   ) : (
-    <div className="container">
-      <header className="d-flex flex-wrap justify-content-center justify-content-md-between border-bottom">
-        <Link
-          to="/"
-          className="row align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"
-        >
-          <span className="fs-4">FSW</span>
-        </Link>
-
-        <div className="col-md-3 text-end">
-          <Link
-            type="button"
-            className="btn btn-outline-primary me-2"
-            to="/login"
-          >
-            Login
-          </Link>
-          <Link type="button" className="btn btn-primary" to="/signup">
-            Sign-up
-          </Link>
-        </div>
-      </header>
-    </div>
+    <div></div>
   );
 }
