@@ -62,7 +62,8 @@ export function Login() {
         <div className="row justify-content-md-center">
           <div className="card text-dark shadow p-3 mb-3 rounded login-container text-center">
             <main className="form-signin w-100 m-auto">
-              <h1 className="h3 mb-3 fw-normal">Log In</h1>
+              <h1 className="h3 mb-2 fw-normal"> Favorite Stock Watcher</h1>
+              <h1 className="h5 mb-3 fw-normal">Log In</h1>
 
               <div className="form-floating mb-3">
                 <input
