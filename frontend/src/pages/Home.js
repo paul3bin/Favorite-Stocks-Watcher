@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import { toast, ToastContainer } from "react-toastify";
 
 import { API } from "../Api";
 import { Wrapper } from "../components/Wrapper";
 import { SuggestedStocks } from "../components/SuggestedStocks";
 import { UserStocks } from "../components/UserStocks";
+
+import "react-toastify/dist/ReactToastify.css";
 
 export function HomePage() {
   document.title = "FSW | Home";
@@ -18,6 +21,14 @@ export function HomePage() {
     setUserStocks(user_stock_list);
   };
 
+  const stockAddedAction = (new_stock) => {
+    setUserStocks([...userStocks, new_stock]);
+    toast.success("Stock ticker added!", {
+      position: toast.POSITION.TOP_RIGHT,
+      theme: "dark",
+    });
+  };
+
   useEffect(() => {
     API.fetchUserDetails(cookies.token).then((resp) => setUserName(resp.name));
     API.fetchUserStocks(cookies.token).then((resp) => setUserStocks(resp));
@@ -26,7 +37,12 @@ export function HomePage() {
   return (
     <Wrapper username={userName}>
       <main class="container">
-        <UserStocks user_stocks={userStocks} deleteStock={deleteStockAction} />
+        <ToastContainer />
+        <UserStocks
+          user_stocks={userStocks}
+          deleteStock={deleteStockAction}
+          addedStock={stockAddedAction}
+        />
 
         <SuggestedStocks />
       </main>

@@ -79,4 +79,15 @@ export class API {
       },
     }).then((resp) => resp.json());
   }
+
+  static async addUserStock(token, body) {
+    return await fetch("stock/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+      body: JSON.stringify(body),
+    }).then((resp) => resp.json());
+  }
 }
