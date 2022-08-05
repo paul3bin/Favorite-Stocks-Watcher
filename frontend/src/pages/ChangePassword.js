@@ -91,7 +91,7 @@ export function ChangePassword() {
             <main className="form-signin w-100 m-auto">
               <h1 className="h3 mb-3 fw-normal">Change Password</h1>
 
-              <div className="form-floating mb-3">
+              <div className="form-floating mb-3 shadow">
                 <input
                   type="password"
                   className="form-control"
@@ -104,7 +104,7 @@ export function ChangePassword() {
                 <label for="floatingInput">Old-Password</label>
               </div>
 
-              <div class="form-floating mb-3">
+              <div class="form-floating mb-3 shadow">
                 <input
                   type="password"
                   className="form-control"
@@ -117,7 +117,7 @@ export function ChangePassword() {
                 <label for="floatingPassword1">Password</label>
               </div>
 
-              <div class="form-floating mb-3">
+              <div class="form-floating mb-3 shadow">
                 <input
                   type="password"
                   className="form-control"
@@ -131,7 +131,7 @@ export function ChangePassword() {
               </div>
 
               <button
-                className="w-100 btn btn-lg btn-primary"
+                className="w-100 btn btn-lg btn-primary shadow mb-3"
                 type="submit"
                 onClick={changePasswordAction}
               >

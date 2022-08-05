@@ -26,7 +26,7 @@ export function StockCard(props) {
     <div className="container mb-2">
       <a
         href="#"
-        className="list-group-item list-group-item-action d-flex gap-3 py-3"
+        className="list-group-item list-group-item-action d-flex gap-3 py-3 bg-light"
         aria-current="true"
         data-bs-toggle="collapse"
         data-bs-target={`#${props.stock.stock_symbol}`}
