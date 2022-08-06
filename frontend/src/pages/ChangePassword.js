@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useCookies } from "react-cookie";
 import { toast, ToastContainer } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import { API } from "../Api";
 import { Wrapper } from "../components/Wrapper";
@@ -137,6 +137,9 @@ export function ChangePassword() {
               >
                 Submit
               </button>
+              <p className="mt-4 mb-3 text-muted">
+                <Link to="/home">Go back</Link>.
+              </p>
             </main>
           </div>
         </div>
