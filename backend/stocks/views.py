@@ -74,7 +74,11 @@ class StocksViewSet(viewsets.ModelViewSet, viewsets.ViewSet):
         """
         method to list all the stock details added by the user.
         """
-        stocks = models.Stocks.objects.all().filter(user=request.user.id)
+        stocks = (
+            models.Stocks.objects.all()
+            .filter(user=request.user.id)
+            .order_by("added_on")
+        )
 
         serializer = serializers.StocksSerializer(instance=stocks, many=True)
 
