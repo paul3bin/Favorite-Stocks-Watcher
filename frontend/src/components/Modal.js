@@ -66,13 +66,13 @@ export function ModalCard(props) {
                   id="stock-ticker-name"
                   required={true}
                   value={stockTicker}
-                  onChange={(e) => setStockTicker(e.target.value)}
+                  onChange={(e) => setStockTicker(e.target.value.toUpperCase())}
                 />
               </div>
               {/* Company name input */}
               <div class="mb-3">
                 <label for="message-text" class="col-form-label">
-                  Message:
+                  Company Name (optional):
                 </label>
                 <textarea
                   class="form-control"
