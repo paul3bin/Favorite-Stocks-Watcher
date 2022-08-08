@@ -19,7 +19,7 @@ export function UserStocks(props) {
   };
 
   return (
-    <div className="mt-5 mb-3 p-3 bg-body rounded shadow">
+    <div className="col-md-8 mt-5 mb-3 p-3 vstack bg-body rounded shadow">
       <div className="container border-bottom pb-2 mb-1">
         <div className="row">
           <div className="col">
@@ -39,7 +39,9 @@ export function UserStocks(props) {
         </div>
       </div>
       <ModalCard invokeStockAddedAction={invokeAddAction} />
-      <div className="list-group w-auto rounded">{stocks}</div>
+      <div className="accordion w-auto rounded" id="accordionExample">
+        {stocks}
+      </div>
     </div>
   );
 }

@@ -38,13 +38,16 @@ export function HomePage() {
     <Wrapper username={userName}>
       <main class="container">
         <ToastContainer />
-        <UserStocks
-          user_stocks={userStocks}
-          deleteStock={deleteStockAction}
-          addedStock={stockAddedAction}
-        />
-
-        <SuggestedStocks />
+        <div className="row g-4 mt-3">
+          <UserStocks
+            user_stocks={userStocks}
+            deleteStock={deleteStockAction}
+            addedStock={stockAddedAction}
+          />
+          <div className="col-md-3 mt-5 mb-3 p-3 ms-4">
+            <SuggestedStocks />
+          </div>
+        </div>
       </main>
     </Wrapper>
   );

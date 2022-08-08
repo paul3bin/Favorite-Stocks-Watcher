@@ -2,7 +2,7 @@ import React from "react";
 
 export function SuggestedStocks() {
   return (
-    <div className="mt-3 mb-3 p-3 bg-body rounded shadow">
+    <div className="p-3 bg-body rounded shadow">
       <h6 className="border-bottom pb-2 mb-0">Suggested stocks</h6>
       <div className="d-flex text-muted pt-3">
         <svg
