@@ -9,7 +9,7 @@ class Stocks(models.Model):
     """
 
     user = models.ForeignKey(to=User, on_delete=models.CASCADE, blank=False, null=False)
-    stock_symbol = models.CharField(max_length=6)
+    stock_symbol = models.CharField(max_length=10)
     company_name = models.CharField(max_length=250, null=True)
     added_on = models.DateTimeField(auto_now_add=True, editable=False)
 
