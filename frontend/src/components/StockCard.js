@@ -20,7 +20,7 @@ export function StockCard(props) {
     API.fetchStockQuote(cookies.token, props.stock.stock_symbol).then((resp) =>
       setStockQuote(resp)
     );
-  }, []);
+  }, [cookies.token, props.stock.stock_symbol]);
 
   return (
     <div className="accordion-item mb-2 border">
