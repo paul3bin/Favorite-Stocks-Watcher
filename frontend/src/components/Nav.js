@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 
 import "../styles/home.css";
@@ -7,6 +7,8 @@ import "../styles/home.css";
 export function Nav(props) {
   const [cookies, setCookie, removeCookie] = useCookies(["token"]);
   const isAuthenticated = cookies.token;
+
+  const navigate = useNavigate();
 
   return isAuthenticated ? (
     <nav
@@ -39,8 +41,11 @@ export function Nav(props) {
             <li>
               <a
                 className="dropdown-item"
-                href="/login"
-                onClick={() => removeCookie(["token"])}
+                href="#"
+                onClick={() => {
+                  removeCookie(["token"]);
+                  navigate("/login");
+                }}
               >
                 Sign out
               </a>
