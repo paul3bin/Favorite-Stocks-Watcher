@@ -18,14 +18,14 @@ export function ModalCard(props) {
 
     if (stockTicker !== "" || company !== "") {
       setStockTicker("");
-      setCompany("");
+      setCompany(null);
     }
   };
 
   const cancelAddingTicker = () => {
     if (stockTicker !== "" || company !== "") {
       setStockTicker("");
-      setCompany("");
+      setCompany(null);
     }
   };
 
