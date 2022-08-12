@@ -17,6 +17,7 @@ export function HomePage() {
   const [userStocks, setUserStocks] = useState([]);
 
   const deleteStockAction = (stock_id) => {
+    API.deleteUserStock(cookies.token, stock_id);
     const user_stock_list = userStocks.filter((n) => n.id !== stock_id);
     setUserStocks(user_stock_list);
   };
@@ -44,7 +45,7 @@ export function HomePage() {
             deleteStock={deleteStockAction}
             addedStock={stockAddedAction}
           />
-          <div className="col-md-3 mt-5 mb-3 p-3 ms-4">
+          <div className="col-md-3 mt-5 mb-3 p-3 ms-4" hidden={true}>
             <SuggestedStocks />
           </div>
         </div>

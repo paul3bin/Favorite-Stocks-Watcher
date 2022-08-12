@@ -5,12 +5,13 @@ import { API } from "../Api";
 
 export function StockCard(props) {
   const [cookies] = useCookies(["token"]);
-  const [profile, setProfile] = useState({});
-  const [stockQuote, setStockQuote] = useState({});
+  const [profile, setProfile, deleteProfile] = useState({});
+  const [stockQuote, setStockQuote, deleteStockQuote] = useState({});
 
   const deleteStock = (stock_id) => {
-    API.deleteUserStock(cookies.token, stock_id);
     props.stockDelete(stock_id);
+    deleteProfile();
+    deleteStockQuote();
   };
 
   useEffect(() => {
@@ -20,7 +21,7 @@ export function StockCard(props) {
     API.fetchStockQuote(cookies.token, props.stock.stock_symbol).then((resp) =>
       setStockQuote(resp)
     );
-  }, [cookies.token, props.stock.stock_symbol]);
+  }, [cookies.token, props.stock.stock_symbol, setProfile, setStockQuote]);
 
   return (
     <div className="accordion-item mb-2 border">
