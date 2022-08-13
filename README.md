@@ -1,6 +1,7 @@
-# Favorite Stock Watcher
+# DevProjects - Favorite stocks watcher
 
-This is a web app for following the details of stocks of companies you like. The application shows you the detailed information on stocks like, closing price, percentage change in price, opening price, and so on.
+This is an open source project from [DevProjects](http://www.codementor.io/projects). Feedback and questions are welcome!
+Find the project requirements here: [Favorite stocks watcher](https://www.codementor.io/projects/web/favorite-stocks-watcher-b0wexig802)
 
 ## Run Locally
 
