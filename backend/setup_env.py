@@ -21,15 +21,22 @@ def setup_envionment() -> None:
     """
     creates a new .env file within the directory and saves env secrets in it!
     """
+
     secret_key = generate_random_string(50)
-    os.environ["SECRET_KEY"] = secret_key
-    os.environ["DEBUG"] = True
-    os.environ["CORS_ALLOWED_ORIGINS"] = "http://localhost:3000"
-    os.environ["CSRF_TRUSTED_ORIGINS"] = "http://localhost:3000"
-    os.environ["ALLOWED_HOSTS"] = "localhost"
+    values = [
+        f"SECRET_KEY={secret_key}",
+        "ALLOWED_HOSTS=localhost, 127.0.0.1",
+        "DEBUG=True",
+        "CORS_ALLOWED_ORIGINS=http://localhost:3000",
+        "CSRF_TRUSTED_ORIGINS=http://localhost:3000",
+    ]
+
+    with open(".env", "a") as f:
+        f.write("\n".join(values))
 
     print("ENVIRONMENT SET!")
 
+    print("Environment config already setup!")
     return
 
 
