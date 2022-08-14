@@ -70,7 +70,7 @@ docker-compose build
 - Run the containers
 
 ```bash
-docker-compose run
+docker-compose up -d
 ```
 
 - Go to [http://localhost:3000](http://localhost:3000) and start using the application.
