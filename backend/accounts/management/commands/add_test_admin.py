@@ -1,5 +1,6 @@
 import os
 
+from decouple import config
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
@@ -14,7 +15,7 @@ class Command(BaseCommand):
         try:
             os.system("python3 manage.py createsuperuser --noinput")
             self.stdout.write(
-                f"Use following credentials to access admin panel:\n- Email: {os.environ.get('DJANGO_SUPERUSER_EMAIL')}\n- Password: {os.environ.get('DJANGO_SUPERUSER_PASSWORD')}"
+                f"Use following credentials to access admin panel:\n- Email: {config('DJANGO_SUPERUSER_EMAIL')}\n- Password: {config('DJANGO_SUPERUSER_PASSWORD')}"
             )
             self.stdout.write(
                 self.style.NOTICE(
