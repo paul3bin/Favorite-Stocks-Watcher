@@ -54,6 +54,7 @@ def get_stock_quote(request, stock_symbol: str) -> dict:
 @api_view(["GET"])
 @permission_classes((IsAuthenticated,))
 @authentication_classes((TokenAuthentication,))
+@cache_page(60 * 2)
 def company_profile(request, stock_symbol: str) -> dict:
     """
     Function that receives a stock symbol and returns a dictionary containing the company profile
