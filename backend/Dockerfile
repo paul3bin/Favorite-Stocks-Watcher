@@ -12,3 +12,5 @@ RUN mkdir /backend
 WORKDIR /backend
 
 COPY . /backend
+
+EXPOSE 8000
