@@ -115,19 +115,20 @@ else:
     }
 
 # Caching using Redis
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": config("REDIS_LOCATION"),
-        "TIMEOUT": 10,
-    }
-}
-
 # Default cache settings for unit testing
 if "test" in sys.argv:
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.dummy.DummyCache",
+        }
+    }
+
+else:
+    CACHES = {
+        "default": {
+            "BACKEND": "django.core.cache.backends.redis.RedisCache",
+            "LOCATION": config("REDIS_LOCATION"),
+            "TIMEOUT": 10,
         }
     }
 
@@ -169,9 +170,6 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
-
-# settings for Django CORS
-CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", cast=Csv())
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
