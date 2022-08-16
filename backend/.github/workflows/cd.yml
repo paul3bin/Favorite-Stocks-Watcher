@@ -1,0 +1,16 @@
+---
+name: Backend Testing
+
+on: push
+
+jobs:
+  fsw_backend_test:
+    name: FSW Backend Test
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Backend Test
+        run: docker-compose run --rm backend sh -c "python3 manage.py test"
