@@ -26,7 +26,6 @@ def setup_envionment() -> None:
     values = [
         f"SECRET_KEY={secret_key}",
         "ALLOWED_HOSTS=localhost, 127.0.0.1",
-        "DEBUG=True",
         "CORS_ALLOWED_ORIGINS=http://localhost:3000",
         "CSRF_TRUSTED_ORIGINS=http://localhost:3000",
     ]
