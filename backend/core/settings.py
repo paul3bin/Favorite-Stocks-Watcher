@@ -177,3 +177,40 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "accounts.User"
+
+
+# Loggging
+DEFAULT_LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": True,
+    "formatters": {
+        "verbose": {
+            "format": "%(asctime)s %(levelname)s [%(name)s:%(lineno)s] %(module)s %(process)d %(thread)d %(message)s"
+        }
+    },
+    "handlers": {
+        "console": {
+            "level": "INFO",
+            "filters": ["require_debug_true"],
+            "class": "logging.StreamHandler",
+        },
+        "gunicorn": {
+            "level": "DEBUG",
+            "class": "logging.handlers.RotatingFileHandler",
+            "formatter": "verbose",
+            "filename": "/opt/djangoprojects/reports/bin/gunicorn.errors",
+            "maxBytes": 1024 * 1024 * 100,  # 100 mb
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "INFO",
+        },
+        "gunicorn.errors": {
+            "level": "DEBUG",
+            "handlers": ["gunicorn", "console"],
+            "propagate": True,
+        },
+    },
+}
