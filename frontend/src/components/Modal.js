@@ -31,7 +31,7 @@ export function ModalCard(props) {
 
   return (
     <div
-      class="modal fade"
+      className="modal fade"
       id="staticBackdrop"
       data-bs-backdrop="static"
       data-bs-keyboard="false"
@@ -39,30 +39,30 @@ export function ModalCard(props) {
       aria-labelledby="staticBackdropLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">
+      <div className="modal-dialog">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title" id="staticBackdropLabel">
               Add new stock ticker to the list
             </h5>
             <button
               type="button"
-              class="btn-close"
+              className="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
               onClick={cancelAddingTicker}
             ></button>
           </div>
-          <div class="modal-body">
+          <div className="modal-body">
             <form>
               {/* Stock ticker input */}
-              <div class="mb-3">
-                <label for="stock-ticker-name" class="col-form-label">
+              <div className="mb-3">
+                <label for="stock-ticker-name" className="col-form-label">
                   Stock Ticker:
                 </label>
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   id="stock-ticker-name"
                   required={true}
                   value={stockTicker}
@@ -70,12 +70,12 @@ export function ModalCard(props) {
                 />
               </div>
               {/* Company name input */}
-              <div class="mb-3">
-                <label for="message-text" class="col-form-label">
+              <div className="mb-3">
+                <label for="message-text" className="col-form-label">
                   Company Name (optional):
                 </label>
                 <textarea
-                  class="form-control"
+                  className="form-control"
                   id="message-text"
                   value={company}
                   onChange={(e) => setCompany(e.target.value)}
@@ -83,10 +83,10 @@ export function ModalCard(props) {
               </div>
             </form>
           </div>
-          <div class="modal-footer">
+          <div className="modal-footer">
             <button
               type="button"
-              class="btn btn-secondary"
+              className="btn btn-secondary"
               data-bs-dismiss="modal"
               onClick={cancelAddingTicker}
             >
@@ -94,7 +94,7 @@ export function ModalCard(props) {
             </button>
             <button
               type="submit"
-              class="btn btn-primary"
+              className="btn btn-primary"
               data-bs-dismiss="modal"
               onClick={addTicker}
             >
