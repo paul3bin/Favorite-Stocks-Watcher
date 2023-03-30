@@ -65,14 +65,14 @@ export function StockCard(props) {
             <br />
           </div>
           <div className="col">
-            <small>Current Price: {stockQuote.current_price}</small>
+            <small>Current Price: ${stockQuote.current_price}</small>
             <br />
-            <small>Percentage Change: {stockQuote.percent_change}</small>
+            <small>Percentage Change: {stockQuote.percent_change}%</small>
             <br />
-            <small>Opening Price: {stockQuote.opening_price}</small>
+            <small>Opening Price: ${stockQuote.opening_price}</small>
             <br />
             <small>
-              Previous Closing Price: {stockQuote.previous_closing_price}
+              Previous Closing Price: ${stockQuote.previous_closing_price}
             </small>
             <br />
           </div>
