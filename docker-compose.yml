@@ -36,6 +36,8 @@ services:
     restart: "unless-stopped"
     container_name: fsw_db
     image: postgres:11-alpine
+    volumes:
+      - ./postgresql:/var/lib/postgresql
     environment:
       - POSTGRES_DB=fsw_app_db
       - POSTGRES_USER=postgres
