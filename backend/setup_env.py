@@ -25,10 +25,6 @@ def setup_envionment() -> None:
     secret_key = generate_random_string(50)
     values = [
         f"SECRET_KEY={secret_key}",
-        "ALLOWED_HOSTS=localhost, 127.0.0.1",
-        "CORS_ALLOWED_ORIGINS=http://localhost:3000",
-        "CSRF_TRUSTED_ORIGINS=http://localhost:3000",
-        "DEBUG=True",
     ]
 
     with open(".env", "a") as f:
