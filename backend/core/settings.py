@@ -128,6 +128,7 @@ else:
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
             "LOCATION": config("REDIS_LOCATION"),
+            "OPTIONS": {"PASSWORD": config("REDIS_PASSWORD")},
             "TIMEOUT": 10,
         }
     }
