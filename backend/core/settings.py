@@ -127,8 +127,7 @@ else:
     CACHES = {
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
-            "LOCATION": config("REDIS_LOCATION"),
-            "OPTIONS": {"PASSWORD": config("REDIS_PASSWORD")},
+            "LOCATION": f'redis://config{"REDIS_PASSWORD"}@{config("REDIS_LOCATION")}',
             "TIMEOUT": 10,
         }
     }
