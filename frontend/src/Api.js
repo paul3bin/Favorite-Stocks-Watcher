@@ -1,8 +1,7 @@
-const host = process.env.REACT_APP_BACKEND_HOST;
-
 export class API {
+  static BACKEND_HOST = process.env.REACT_APP_BACKEND_HOST;
   static async loginUser(body) {
-    return await fetch(`http://localhost:8000/api/user/token`, {
+    return await fetch(`${API.BACKEND_HOST}/api/user/token`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -12,7 +11,7 @@ export class API {
   }
 
   static async registerUser(body) {
-    return await fetch(`http://localhost:8000/api/user`, {
+    return await fetch(`${API.BACKEND_HOST}/api/user`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -22,7 +21,7 @@ export class API {
   }
 
   static async changeUserPassword(body, token) {
-    return await fetch(`http://localhost:8000/api/user/change-password`, {
+    return await fetch(`${API.BACKEND_HOST}/api/user/change-password`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -33,7 +32,7 @@ export class API {
   }
 
   static async fetchUserDetails(token) {
-    return await fetch(`http://localhost:8000/api/user/me`, {
+    return await fetch(`${API.BACKEND_HOST}/api/user/me`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +43,7 @@ export class API {
 
   static async fetchCompanyProfile(token, stock_symbol) {
     return await fetch(
-      `http://localhost:8000/api/stock/company-profile/${stock_symbol}`,
+      `${API.BACKEND_HOST}/api/stock/company-profile/${stock_symbol}`,
       {
         method: "GET",
         headers: {
@@ -56,20 +55,17 @@ export class API {
   }
 
   static async fetchStockQuote(token, stock_symbol) {
-    return await fetch(
-      `http://localhost:8000/api/stock/quote/${stock_symbol}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Token ${token}`,
-        },
-      }
-    ).then((resp) => resp.json());
+    return await fetch(`${API.BACKEND_HOST}/api/stock/quote/${stock_symbol}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${token}`,
+      },
+    }).then((resp) => resp.json());
   }
 
   static async fetchUserStocks(token) {
-    return await fetch(`http://localhost:8000/api/stock`, {
+    return await fetch(`${API.BACKEND_HOST}/api/stock`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -79,7 +75,7 @@ export class API {
   }
 
   static async deleteUserStock(token, id) {
-    return await fetch(`http://localhost:8000/api/stock/${id}`, {
+    return await fetch(`${API.BACKEND_HOST}/api/stock/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -89,7 +85,7 @@ export class API {
   }
 
   static async addUserStock(token, body) {
-    return await fetch(`http://localhost:8000/api/stock`, {
+    return await fetch(`${API.BACKEND_HOST}/api/stock`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
