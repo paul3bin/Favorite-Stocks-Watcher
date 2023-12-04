@@ -128,10 +128,10 @@ else:
         "default": {
             "BACKEND": "django.core.cache.backends.redis.RedisCache",
             "LOCATION": f'redis://{config("REDIS_LOCATION")}',
-            "OPTIONS": {
-                "CLIENT_CLASS": "redis_cache.client.DefaultClient",
-                # "PASSWORD": config("REDIS_PASSWORD"),
-            },
+            # "OPTIONS": {
+            #     "CLIENT_CLASS": "redis_cache.client.DefaultClient",
+            #     "PASSWORD": config("REDIS_PASSWORD"),
+            # },
             "TIMEOUT": 10,
         }
     }
